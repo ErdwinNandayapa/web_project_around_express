@@ -11,7 +11,7 @@ app.use("/cards", cardRouter);
 
 
 app.use((req, res) => {
-  return res.status(HttpStatus).send({message: HttpResponseMessage.NOT_FOUND});
+  return res.status(HttpStatus.NOT_FOUND).send({message: HttpResponseMessage.NOT_FOUND});
 });
 
 app.listen(PORT, () => {
