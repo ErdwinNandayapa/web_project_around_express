@@ -11,7 +11,8 @@ exports.getCards = async (req, res) => {
 
 exports.createCard = async (req, res) => {
   try {
-    const { name, link, owner } = req.body;
+    const { name, link } = req.body;
+    const owner = req.user._id; // Usar el _id del usuario inyectado por el middleware
     const newCard = new Card({ name, link, owner });
     await newCard.save();
     res.status(200).json(newCard);
