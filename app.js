@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require('mongoose')
 const app = express();
 const { PORT = 3000 } = process.env;
 const {HttpStatus,HttpResponseMessage} = require("./enums/http")
@@ -6,8 +7,18 @@ const {HttpStatus,HttpResponseMessage} = require("./enums/http")
 const usersRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
 
+// Middleware para parsear JSON
+app.use(express.json());
+
+mongoose.connect('mongodb://localhost:27017/aroundb',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(()=> console.log("MongoDB connect successfully"))
+.catch(err=> console.error("Mongo connection error",err))
+
 app.use("/users", usersRouter);
 app.use("/cards", cardRouter);
+
 
 
 app.use((req, res) => {
