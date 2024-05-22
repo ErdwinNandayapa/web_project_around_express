@@ -2,7 +2,11 @@ const User = require("../models/user");
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).orFail(()=>{
+      const error = new Error("Users not found")
+      error.statusCode= 404;
+      throw error;
+    });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
